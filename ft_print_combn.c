@@ -28,7 +28,6 @@ to one more than the previous digit:
  ^ this is the first changed digit, the digits to the right are set sequentially
 */
 
-#include <stdio.h>
 #include <unistd.h>
 
 void	ft_putchar(char c)
@@ -36,33 +35,20 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	ft_putstr(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-}
-
 void	print_array(char v[], int size, int last)
 {
 	int		i;
 
 	i = 0;
-	if (v[0] == last)
-	{
-		while (i < size)
-			ft_putchar(v[i++]);
-		write(1, ".\n", 2);
-		return ;
-	}
 	while (i < size)
-		ft_putchar(v[i++]);
-	write(1, ", ", 2);
+	{
+	    ft_putchar(v[i] + 48);
+		i++;
+	}
+	if (v[0] == last)
+		write(1, ".\n", 2);
+	else
+	    write(1, ", ", 2);
 }
 
 void	ft_print_combn(int n)
@@ -80,10 +66,10 @@ void	ft_print_combn(int n)
 
 	for (int i=0; i<n; ++i)
 	{
-		v[i] = i + 48;
+		v[i] = i;
 		// I create both initial and final STATES that i wanna reach.
 		// USE A WHILE HERE for Norminette
-		v_max[i] = (10 - n) + i + 48;
+		v_max[i] = (10 - n) + i;
 	}		
 	
 	//Routine to print the checked vector
@@ -105,55 +91,43 @@ void	ft_print_combn(int n)
 	}
 }
 
-int ft_isspace(char c)
+void	ft_print_combn_backtrack(int pos, int size, int start, char *v)
 {
-    int i;
-    
-    i = 0;
-    if (c >= 9 && c <= 13 || c == 32)
-        return (1);
-	return (0);
-}
-
-int ft_atoi(char *str)
-{
-    int i;
-	int nbr;
-	int sign;
+	int		i;
 	
-	sign = 1;
-	i = 0;
-	nbr = 0;
-	if (str == NULL)
-	    return (0);
-	
-	while (ft_isspace(*str) || str[i] == '-' || str[i] == '+')
-    {
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
-	
-	while (str[i] >= '0' && str[i] <= '9')
+	if (pos == size)
 	{
-		nbr = nbr * 10 + (str[i] - '0');
-		i++;
+	    print_array(v, size, 10 - size);
+	    return;
 	}
-	return (nbr * sign);
+	i = start;
+	while (i < 10)
+	{
+	    v[pos] = i;
+	    ft_print_combn_backtrack(pos + 1, size, i + 1, v);
+	    i++;
+	}
 }
-
-int		main(int argc, char** argv)
-{	
+int		main(int argc, char **argv)
+{
     int n;
+    char v[10];
     
-    if (argc < 2)
-    {
-        ft_putstr("Please give a number\n");
-        return (1);
-    }
-    n = ft_atoi(argv[1]);
-	ft_putstr("\nResult:\n");
-	ft_print_combn(n);
-	ft_putstr("----------\n");
-    return (0); 
+//     n = 3;
+//     if (argc < 2)
+//     {
+//         write(1, "Please give a number\n", 17);
+// 		return (1);
+//     }
+//     if (n <= 0 || n > 10)
+// 	{
+// 		write(1, "Please insert a number 0<n<10\n", 25);
+// 		return (1);
+// 	}
+	ft_print_combn(2);
+	write(1, "\nCOMBO 1\n", 9);
+	ft_print_combn_backtrack(0, 10, 0, v);
+	write(1, "\nCOMBO 2\n", 9);
+	write(1, "\nFINAL\n", 7);
+	return (0);
 }
