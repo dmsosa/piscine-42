@@ -10,48 +10,73 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Oceano <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/01 17:58:04 by Oceano            #+#    #+#             */
+/*   Updated: 2022/12/13 10:06:09 by Oceano           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_isspace(char c)
+#include "lib.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int ft_valid_base(char *base)
 {
-    int i;
-    
-    i = 0;
-    if (c >= 9 && c <= 13 || c == 32)
-        return (1);
-	return (0);
+    while (base[i])
+    {   
+        if (ft_isspace(base[i]) || base[i] == '+' || base[i] == '-')
+            return (-1);
+        j = i + 1;
+        while (base[j])
+        {
+            if (base[i] == base[j])
+                return (-1);
+            j++;
+        }
+        i++;
+    }
+    if (i < 2)
+        return (-1);
+    return (i);
 }
 
-int ft_atoi(char *str)
+int		ft_atoi(char *str)
 {
-    int i;
-	int nbr;
 	int sign;
-	
+	int result;
+
 	sign = 1;
-	i = 0;
-	nbr = 0;
-	if (str == NULL)
-	    return (0);
-	
-	while (ft_isspace(*str) || str[i] == '-' || str[i] == '+')
-    {
+
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		++str;
+	while (*str == '+' || *str == '-')
+	{
 		if (*str == '-')
 			sign *= -1;
-		str++;
-	}
-	
-	while (str[i] >= '0' && str[i] <= '9')
+		++str;
+	}	
+	//Check all numbers and stock in accumulator number	
+	while (*str >= 48 && *str <= 57)	
 	{
-		nbr = nbr * 10 + (str[i] - '0');
-		i++;
+		//This is a << shift_base10_like operation
+		number *= 10;
+		//Conversion from char to number
+		number += *str - 48;
+		++str;
 	}
-	return (nbr * sign);
+	return (number * sign);
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
-	printf("ey %d\n", ft_atoi(argv[1]));	
+	char str[] = "--+345";
+	printf("My atoi: '%d'\n", ft_atoi(str));	
+	printf("REAL atoi: '%d'\n", atoi(str));	
 	return (0);
 }
