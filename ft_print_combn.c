@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: durisosa <durisosa@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 17:14:51 by durisosa          #+#    #+#             */
-/*   Updated: 2022/11/15 18:24:06 by durisosa         ###   ########.fr       */
+/*   Created: 2022/10/15 17:14:51 by Oceano            #+#    #+#             */
+/*   Updated: 2022/11/15 18:24:06 by Oceano           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		main(int argc, char **argv)
 {
     int n;
     char v[10];
+    char str[] = "++---354";
     
 //     n = 3;
 //     if (argc < 2)
@@ -124,10 +125,8 @@ int		main(int argc, char **argv)
 // 		write(1, "Please insert a number 0<n<10\n", 25);
 // 		return (1);
 // 	}
-	ft_print_combn(2);
-	write(1, "\nCOMBO 1\n", 9);
-	ft_print_combn_backtrack(0, 10, 0, v);
-	write(1, "\nCOMBO 2\n", 9);
-	write(1, "\nFINAL\n", 7);
+    printf("Real atoi: %s", atoi(str));
+    printf("MY: %s", ft_atoi(str));
+	
 	return (0);
 }
