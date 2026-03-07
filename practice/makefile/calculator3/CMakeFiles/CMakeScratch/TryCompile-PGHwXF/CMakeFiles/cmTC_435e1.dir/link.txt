@@ -1,0 +1,1 @@
+/usr/bin/cc.exe -Wl,--enable-auto-import -v -Wl,-v CMakeFiles/cmTC_435e1.dir/CMakeCCompilerABI.c.o -o cmTC_435e1.exe -Wl,--out-implib,libcmTC_435e1.dll.a -Wl,--major-image-version,0,--minor-image-version,0

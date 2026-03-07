@@ -1,1 +1,5 @@
 /piscine42-main
+#Ausschließen von .a- und .o-Dateien
+*a
+*o
+**/build/
